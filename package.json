@@ -1,0 +1,10 @@
+{
+  "name": "sous-chef",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Michael Yang",
+  "dependencies": {
+    "botkit": "^0.6.14"
+  }
+}
