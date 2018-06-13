@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "author": "Michael Yang",
+  "scripts": {
+    "start": "node src/chef.js"
+  },
   "dependencies": {
     "botkit": "^0.6.14"
   }
