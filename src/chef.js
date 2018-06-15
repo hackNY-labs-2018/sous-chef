@@ -25,7 +25,7 @@ function main() {
 
     const [trigger, response] = msgText.split('if i say')[1].split('you say').map(s => s.trim());
 
-    controller.storage.commands.save({
+    controller.storage.items.save({
       trigger: trigger,
       response: response, 
       id: `${message.user}--${message.ts}`,
@@ -34,8 +34,8 @@ function main() {
     bot.reply(message, 'aight 😏')
   })
 
-  if (controller.storage.commands) {
-    controller.storage.commands.all((err, commands) => {
+  if (controller.storage.items) {
+    controller.storage.items.all((err, commands) => {
       commands.forEach(command => {
         controller.hears([command.trigger], (bot, message) => {
           bot.reply(message, command.response)

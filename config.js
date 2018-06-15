@@ -3,5 +3,7 @@ module.exports = {
     debug: true
   },
   bot: {},
-  json_file_store: 'db', // won't work on heroku or anywhere w ephemeral FS
+  storage: require('botkit_myjson_storage')({
+    bin_id: 'i7rn2'
+  }),
 }
