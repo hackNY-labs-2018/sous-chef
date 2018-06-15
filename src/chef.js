@@ -23,8 +23,7 @@ function main() {
       return bot.reply(message, 'can u not ☹️')
     }
 
-    const trigger = msgText.split('if i say')[1].split('you say')[0].trim()
-    const response = msgText.split('if i say')[1].split('you say')[1].trim()
+    const [trigger, response] = msgText.split('if i say')[1].split('you say').map(s => s.trim());
 
     controller.storage.commands.save({
       trigger: trigger,
