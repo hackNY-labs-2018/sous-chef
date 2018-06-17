@@ -34,7 +34,8 @@ function main() {
     storage.items.save({
       trigger: trigger,
       response: response, 
-      id: `${message.user}--${message.ts}`,
+      author: message.user,
+      timestamp: message.ts,
     })
 
     bot.reply(message, 'aight 😏')
