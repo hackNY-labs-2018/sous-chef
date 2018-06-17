@@ -1,24 +1,25 @@
-const botkit = require('botkit')
+'use strict'
+
+const botkit = require('botkit') // remove this eventually
 const config = require('../config')
 const certs = require('../certs')
 const storage = require('botkit_myjson_storage')({
   bin_id: config.binId 
 })
 
+const env = process.env.NODE_ENV || 'development'
+const controller = botkit.slackbot(config.dev)
+const bot = controller.spawn(Object.assign({ token: certs.token }, config.bot))
+
 
 function main() {
-  const env = process.env.NODE_ENV || 'development'
-  const controller = botkit.slackbot(config.dev)
-  const bot = controller.spawn(Object.assign({ token: certs.token }, config.bot))
-
+  // fyi: apparently node + botkit does not break on undefined errors.
+  // consider removing botkit or switching to python.
+  // how is botkit doing this?????? botkit is garbage and so is node
   bot.startRTM()
 
   controller.hears(['food'], ['ambient'], (bot, event) => {
   	bot.reply(event, 'im hungry')
-  })
-
-  controller.on(['bot_channel_join', 'direct_mention'], (bot, event) => {
-  	bot.reply(event, 'hey gang')
   })
   
   controller.hears(['if i say'], ['direct_mention'], (bot, message) => {
@@ -37,14 +38,27 @@ function main() {
     })
 
     bot.reply(message, 'aight 😏')
+    bindCommand(trigger, response)
   })
 
-  if (storage.items) {
+  loadAllCommands()
+}
+
+function bindCommand(trigger, response) {
+  console.log(trigger, response)
+  console.log('hey: ' + (typeof controller))
+
+  controller.hears([trigger], ['direct_mention', 'ambient'], (bot, message) => {
+    console.log('heard: '+trigger)
+    bot.reply(message, response)
+  })
+}
+
+function loadAllCommands() {
+    if (storage.items) {
     storage.items.all((err, commands) => {
       commands.forEach(command => {
-        controller.hears([command.trigger], (bot, message) => {
-          bot.reply(message, command.response)
-        })
+        bindCommand(command.trigger, command.response)
       })
     })
   }
