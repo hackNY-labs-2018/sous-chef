@@ -5,10 +5,13 @@
   "main": "index.js",
   "author": "Michael Yang",
   "scripts": {
-    "start": "node src/chef.js"
+    "start": "nodemon src/chef.js"
   },
   "dependencies": {
     "botkit": "^0.6.14",
     "botkit_myjson_storage": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
   }
 }
