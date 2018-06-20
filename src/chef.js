@@ -111,8 +111,9 @@ function bindReacc(trigger, response) {
 }
 
 function loadAllCommands() {
-    if (storage.items) {
-    storage.items.all((err, commands) => {
+  if (storage.items) {
+    itemz = storage.items.reverse()
+    itemz.all((err, commands) => {
       commands.forEach(command => {
         bindCommand(command.trigger, command.response)
       })
@@ -122,8 +123,8 @@ function loadAllCommands() {
 
 function loadAllReaccs() {
   if (reacc_storage.items) {
-    console.log('is working')
-    storage.items.all((err, reaccs) => {
+    reaccz = reacc_storage.items.reverse()
+    reaccz.all((err, reaccs) => {
       reaccs.forEach(reacc => {
         bindReacc(reacc.trigger, reacc.response)
       })
