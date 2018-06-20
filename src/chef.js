@@ -15,6 +15,11 @@ const env = process.env.NODE_ENV || 'development'
 const controller = botkit.slackbot(config.dev)
 const bot = controller.spawn(Object.assign({ 'token': token }, config.bot))
 
+const replies = {
+  confirmation: 'sure dude 😏',
+  rejection: 'can u not 🤨'
+}
+
 String.prototype.replaceAll = function (find, replace) {
   var str = this;
   return str.replace(new RegExp(find, 'g'), replace);
@@ -34,7 +39,7 @@ function main() {
     const msgText = message.text;
 
     if (!msgText.includes('to')) {
-      return bot.reply(message, 'can u not ☹️')
+      return bot.reply(message, replies.rejection)
     }
 
     let [response, trigger] = msgText.split('react with')[1].split('to').map(s => s.trim());
@@ -53,7 +58,7 @@ function main() {
 
     
     bindReacc(trigger, response)
-    bot.reply(message, 'Noted. 😏')
+    bot.reply(message, replies.confirmation)
   })
 
   loadAllReaccs()
@@ -62,7 +67,7 @@ function main() {
     const msgText = message.text;
 
     if (!msgText.includes('you say')) {
-      return bot.reply(message, 'can u not ☹️')
+      return bot.reply(message, replies.rejection) 
     }
 
     const [trigger, response] = msgText.split('if i say')[1].split('you say').map(s => s.trim());
@@ -76,10 +81,10 @@ function main() {
 
     if (trigger.includes(" ") || trigger.length >= 5) {
       bindCommand(trigger, response)
-      bot.reply(message, 'Noted. 😏')
+      bot.reply(message, replies.confirmation)
     }
     else {
-      bot.reply(message, 'Sorry, commands must be at least two words or longer than four letters.')
+      bot.reply(message, 'u can do better than that lol')
     }
   })
 
