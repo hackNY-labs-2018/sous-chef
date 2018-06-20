@@ -1,16 +1,15 @@
 'use strict'
 
+const token = process.env.SLACK_API_TOKEN || require('../certs').token
 const botkit = require('botkit') // remove this eventually
 const config = require('../config')
-const certs = require('../certs')
 const storage = require('botkit_myjson_storage')({
   bin_id: config.binId 
 })
 
 const env = process.env.NODE_ENV || 'development'
 const controller = botkit.slackbot(config.dev)
-const bot = controller.spawn(Object.assign({ token: certs.token }, config.bot))
-
+const bot = controller.spawn(Object.assign({ 'token': token }, config.bot))
 
 function main() {
   // fyi: apparently node + botkit does not break on undefined errors.
