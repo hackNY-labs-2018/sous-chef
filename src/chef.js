@@ -37,8 +37,13 @@ function main() {
       timestamp: message.ts,
     })
 
-    bot.reply(message, 'aight 😏')
-    bindCommand(trigger, response)
+    if (trigger.includes(" ") || trigger.length >= 5) {
+      bindCommand(trigger, response)
+      bot.reply(message, 'Noted. 😏')
+    }
+    else {
+      bot.reply(message, 'Sorry, commands must be at least two words or longer than four letters.')
+    }
   })
 
   loadAllCommands()
