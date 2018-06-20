@@ -25,14 +25,14 @@ function main() {
   	bot.reply(event, 'im hungry')
   })
 
-  controller.hears(['react'], ['direct_mention'], (bot, message) => {
+  controller.hears(['react with'], ['direct_mention'], (bot, message) => {
     const msgText = message.text;
 
     if (!msgText.includes('to')) {
       return bot.reply(message, 'can u not ☹️')
     }
 
-    let [trigger, response] = msgText.split('react')[1].split('to').map(s => s.trim());
+    let [trigger, response] = msgText.split('react with')[1].split('to').map(s => s.trim());
 
     response = response.replace(':', '');
 
@@ -44,7 +44,7 @@ function main() {
     });
 
     
-    bindCommand(trigger, response)
+    bindReacc(trigger, response)
     bot.reply(message, 'Noted. 😏')
   })
 
