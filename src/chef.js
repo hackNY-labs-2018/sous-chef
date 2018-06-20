@@ -34,6 +34,9 @@ function main() {
 
     let [response, trigger] = msgText.split('react with')[1].split('to').map(s => s.trim());
 
+    console.log('trigger:', trigger);
+    console.log('response:', response);
+
     response = response.replace(':', '');
 
     reacc_storage.items.save({
@@ -114,6 +117,7 @@ function loadAllCommands() {
 
 function loadAllReaccs() {
   if (reacc_storage.items) {
+    console.log('is working')
     storage.items.all((err, reaccs) => {
       reaccs.forEach(reacc => {
         bindReacc(reacc.trigger, reacc.response)
