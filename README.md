@@ -14,3 +14,7 @@ Usage
 > [command]
 > [response]
 ```
+
+Dev
+---
+Restart heroku instance every time DB manually edited in order to clear cache for changes to take effect.
