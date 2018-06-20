@@ -15,6 +15,11 @@ const env = process.env.NODE_ENV || 'development'
 const controller = botkit.slackbot(config.dev)
 const bot = controller.spawn(Object.assign({ 'token': token }, config.bot))
 
+String.prototype.replaceAll = function (find, replace) {
+  var str = this;
+  return str.replace(new RegExp(find, 'g'), replace);
+};
+
 function main() {
   // fyi: apparently node + botkit does not break on undefined errors.
   // consider removing botkit or switching to python.
@@ -37,7 +42,7 @@ function main() {
     console.log('trigger:', trigger);
     console.log('response:', response);
 
-    response = response.replace(':', '');
+    response = response.replaceAll(':', '');
 
     reacc_storage.items.save({
       trigger: trigger,
