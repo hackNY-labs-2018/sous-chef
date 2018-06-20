@@ -32,7 +32,7 @@ function main() {
       return bot.reply(message, 'can u not ☹️')
     }
 
-    let [trigger, response] = msgText.split('react with')[1].split('to').map(s => s.trim());
+    let [response, trigger] = msgText.split('react with')[1].split('to').map(s => s.trim());
 
     response = response.replace(':', '');
 
