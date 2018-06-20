@@ -7,6 +7,10 @@ const storage = require('botkit_myjson_storage')({
   bin_id: config.binId 
 })
 
+const reacc_storage = require('botkit_myjson_storage')({
+  bin_id: config.reaccBinId 
+})
+
 const env = process.env.NODE_ENV || 'development'
 const controller = botkit.slackbot(config.dev)
 const bot = controller.spawn(Object.assign({ 'token': token }, config.bot))
@@ -20,6 +24,31 @@ function main() {
   controller.hears(['food'], ['ambient'], (bot, event) => {
   	bot.reply(event, 'im hungry')
   })
+
+  controller.hears(['react'], ['direct_mention'], (bot, message) => {
+    const msgText = message.text;
+
+    if (!msgText.includes('to')) {
+      return bot.reply(message, 'can u not ☹️')
+    }
+
+    let [trigger, response] = msgText.split('react')[1].split('to').map(s => s.trim());
+
+    response = response.replace(':', '');
+
+    reacc_storage.items.save({
+      trigger: trigger,
+      response: response, 
+      author: message.user,
+      timestamp: message.ts,
+    });
+
+    
+    bindCommand(trigger, response)
+    bot.reply(message, 'Noted. 😏')
+  })
+
+  loadAllReaccs()
   
   controller.hears(['if i say'], ['direct_mention'], (bot, message) => {
     const msgText = message.text;
@@ -59,6 +88,20 @@ function bindCommand(trigger, response) {
   })
 }
 
+function bindReacc(trigger, response) {
+  controller.hears([trigger], ['direct_mention', 'ambient'], (bot, message) => {
+    bot.api.reactions.add({
+      timestamp: message.ts,
+      channel: message.channel,
+      name: response,
+    }, function(err, res) {
+      if (err) {
+          bot.botkit.log('Failed to add emoji reaction :(', err);
+      }
+    });
+  })
+}
+
 function loadAllCommands() {
     if (storage.items) {
     storage.items.all((err, commands) => {
@@ -66,6 +109,16 @@ function loadAllCommands() {
         bindCommand(command.trigger, command.response)
       })
     })
+  }
+}
+
+function loadAllReaccs() {
+  if (reacc_storage.items) {
+    storage.items.all((err, reaccs) => {
+      reaccs.forEach(reacc => {
+        bindReacc(reacc.trigger, reacc.response)
+      })
+    });
   }
 }
 

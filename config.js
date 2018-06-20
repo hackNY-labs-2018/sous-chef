@@ -3,5 +3,6 @@ module.exports = {
     debug: true
   },
   bot: {},
-  binId: 'i7rn2'
+  binId: 'i7rn2',
+  reaccBinId: '14eici'
 }
