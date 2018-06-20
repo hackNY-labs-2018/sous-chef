@@ -61,7 +61,7 @@ function main() {
     bot.reply(message, replies.confirmation)
   })
 
-  loadAllReaccs()
+  loadAll(reacc_storage, bindReacc)
   
   controller.hears(['if i say'], ['direct_mention'], (bot, message) => {
     const msgText = message.text;
@@ -88,7 +88,7 @@ function main() {
     }
   })
 
-  loadAllCommands()
+  loadAll(storage, bindCommand)
 }
 
 function bindCommand(trigger, response) {
@@ -115,25 +115,14 @@ function bindReacc(trigger, response) {
   })
 }
 
-function loadAllCommands() {
-  if (storage.items) {
-    storage.items.all((err, commands) => {
-      commands = commands.reverse()
-      commands.forEach(command => {
-        bindCommand(command.trigger, command.response)
+function loadAll(store, bindfunc) {
+  if (store.items) {
+    store.items.all((err, entries) => {
+      entries = entries.reverse()
+      entries.forEach(entry => {
+        bindfunc(entry.trigger, entry.response)
       })
     })
-  }
-}
-
-function loadAllReaccs() {
-  if (reacc_storage.items) {
-    reacc_storage.items.all((err, reaccs) => {
-      reaccs = reaccs.reverse()
-      reaccs.forEach(reacc => {
-        bindReacc(reacc.trigger, reacc.response)
-      })
-    });
   }
 }
 
