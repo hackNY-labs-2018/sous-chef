@@ -119,6 +119,7 @@ function main() {
       response_url = response
       keysStr = 0
     }
+
     // eg: response = 'http://hackny.org/thing.json at a.b.c'
     // response_url = 'http://hackny.org/thing.json'
     // keysStr = 'a.b.c'
@@ -146,7 +147,7 @@ function main() {
 function bindQuery(trigger, response_url, keysStr) {
   controller.hears([trigger], ['direct_mention', 'ambient'], (bot, message) => {
     console.log('heard: '+trigger)
-    request.get(response_url)
+    request.get(response_url.replace('<','').replace('>', ''))
       .then(response => {
         if (keysStr) {
           if (typeof response != 'object') {
