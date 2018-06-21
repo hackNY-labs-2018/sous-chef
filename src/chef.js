@@ -147,18 +147,23 @@ function main() {
 function bindQuery(trigger, response_url, keysStr) {
   controller.hears([trigger], ['direct_mention', 'ambient'], (bot, message) => {
     console.log('heard: '+trigger)
-    request.get(response_url.replace('<','').replace('>', ''))
+    const urlToReq = response_url.replace('<','').replace('>', '')
+    console.log(`requesting ${urlToReq}`)
+    request.get(urlToReq)
       .then(response => {
+        console.log('got a response')
+        console.log(response)
         if (keysStr) {
           if (typeof response != 'object') {
             response = JSON.parse(response)
           }
           bot.reply(message, resolve(keysStr, response))
         } else {
-          bot.reply(message, response)
+          bot.reply(message, JSON.stringify(response))
         }
       })
       .catch(err => {
+        console.log(err)
         bot.reply(message, 'the ay pee eye didnt give me the yum yums :(((((((')
       })
   })
