@@ -127,7 +127,7 @@ function main() {
     api_storage.items.save({
       trigger: trigger,
       response_url: response_url,
-      keys: keysStr || 0,
+      keysStr: keysStr || 0,
       author: message.user,
       timestamp: message.ts,
     })
