@@ -147,7 +147,7 @@ function main() {
 function bindQuery(trigger, response_url, keysStr) {
   controller.hears([trigger], ['direct_mention', 'ambient'], (bot, message) => {
     console.log('heard: '+trigger)
-    const urlToReq = response_url.replace('<','').replace('>', '')
+    const urlToReq = response_url.replace('&amp;', '&').replace('<','').replace('>', '')
     console.log(`requesting ${urlToReq}`)
     request.get(urlToReq)
       .then(response => {
