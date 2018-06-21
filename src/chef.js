@@ -157,7 +157,9 @@ function bindQuery(trigger, response_url, keysStr) {
           if (typeof response != 'object') {
             response = JSON.parse(response)
           }
-          bot.reply(message, resolve(keysStr, response))
+          const answer = resolve(keysStr, response)
+          console.log('answer:',answer)
+          bot.reply(message, answer)
         } else {
           bot.reply(message, JSON.stringify(response))
         }
