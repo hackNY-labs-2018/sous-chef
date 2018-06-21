@@ -4,5 +4,6 @@ module.exports = {
   },
   bot: {},
   binId: 'i7rn2',
-  reaccBinId: '14eici'
+  reaccBinId: '14eici',
+  apiBinId: 'o06sy'
 }
