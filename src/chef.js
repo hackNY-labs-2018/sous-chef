@@ -113,8 +113,8 @@ function main() {
 
     let response_url, keysStr;
 
-    if (response.includes('at')) {
-      [response_url, keysStr] = response.split('at').map(s => s.trim())
+    if (response.includes('more specifically')) {
+      [response_url, keysStr] = response.split('more specifically').map(s => s.trim())
     } else {
       response_url = response
       keysStr = 0
