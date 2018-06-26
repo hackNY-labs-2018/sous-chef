@@ -164,7 +164,7 @@ function bindQuery(trigger, response_url, keysStr) {
           if (typeof response != 'object') {
             response = JSON.parse(response)
           }
-          const answer = JSON.stringify(resolve(keysStr, response))
+          const answer = JSON.stringify(resolve(keysStr, response)).replace(/\"/g, "").toLowerCase()
           console.log('answer:',answer)
           bot.reply(message, answer)
         } else {
