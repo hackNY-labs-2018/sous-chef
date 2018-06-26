@@ -149,7 +149,14 @@ function bindQuery(trigger, response_url, keysStr) {
     console.log('heard: '+trigger)
     const urlToReq = response_url.replace('&amp;', '&').replace('<','').replace('>', '')
     console.log(`requesting ${urlToReq}`)
-    request.get(urlToReq)
+    
+    var options = {
+      url: urlToReq,
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    }
+    
+    request(options)
       .then(response => {
         console.log('got a response')
         console.log(response)
