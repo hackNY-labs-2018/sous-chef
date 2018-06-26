@@ -153,7 +153,7 @@ function bindQuery(trigger, response_url, keysStr) {
     var options = {
       url: urlToReq,
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Accept': 'application/json' },
     }
     
     request(options)
