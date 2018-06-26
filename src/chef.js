@@ -164,11 +164,11 @@ function bindQuery(trigger, response_url, keysStr) {
           if (typeof response != 'object') {
             response = JSON.parse(response)
           }
-          const answer = JSON.stringify(resolve(keysStr, response)).replace(/(\r\n\t|\n|\r\t)/gm,"").replace(/\"/g, "").toLowerCase()
+          const answer = JSON.stringify(resolve(keysStr, response)).replace(/(\r\n\t|\n|\r\t)/gm," ").replace(/\"/g, "").toLowerCase()
           console.log('answer:',answer)
           bot.reply(message, answer)
         } else {
-          bot.reply(message, JSON.stringify(response).replace(/(\r\n\t|\n|\r\t)/gm,"").replace(/\"/g, "").toLowerCase())
+          bot.reply(message, JSON.stringify(response).replace(/(\r\n\t|\n|\r\t)/gm," ").replace(/\"/g, "").toLowerCase())
         }
       })
       .catch(err => {
